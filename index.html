@@ -79,7 +79,7 @@
 
     li { list-style: none; padding: 6px; }
 
-    .rank1 { color: gold; }
+    .rank1 { color: gold; font-weight: bold; font-size: 18px; }
     .rank2 { color: silver; }
     .rank3 { color: #cd7f32; }
 
@@ -245,10 +245,15 @@ function loadLeaderboard() {
     snap.forEach((d) => {
       const data = d.data();
 
+      let medal = "";
+      if (pos === 1) medal = "🥇 ";
+      else if (pos === 2) medal = "🥈 ";
+      else if (pos === 3) medal = "🥉 ";
+
       ticker += `${data.username} pushing ${data.clicks} • `;
 
       const li = document.createElement("li");
-      li.innerText = `#${pos} ${data.username} - ${data.clicks}`;
+      li.innerText = `${medal}#${pos} ${data.username} - ${data.clicks}`;
 
       if (data.username === username) {
         li.classList.add("me");
@@ -287,7 +292,6 @@ function showPopup(text) {
   setTimeout(() => div.remove(), 1500);
 }
 
-// ambient activity
 setInterval(() => {
   const names = ["TapGod", "ClickX", "FastFinger", "SpeedTap"];
   const name = names[Math.floor(Math.random()*names.length)];
@@ -296,7 +300,6 @@ setInterval(() => {
   addFeed(name + " reached " + num + " clicks");
 }, 4000);
 
-// online count
 setInterval(() => {
   document.getElementById("online").innerText =
     Math.floor(Math.random() * 60 + 20) + " players battling";
