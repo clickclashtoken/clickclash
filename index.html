@@ -1,0 +1,134 @@
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  onSnapshot,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "clickclash-320b7.firebaseapp.com",
+  projectId: "clickclash-320b7"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* STATE */
+let user = null;
+let username = "";
+let clicks = 0;
+let ready = false;
+
+/* AUTH (SAFE) */
+signInAnonymously(auth);
+
+onAuthStateChanged(auth, async (u) => {
+  if (!u) return;
+  user = u;
+  ready = true;
+});
+
+/* LOGIN */
+window.saveUsername = async function () {
+  if (!ready) return alert("Firebase loading... try again");
+
+  username = document.getElementById("username").value.trim();
+  if (!username) return alert("Enter username");
+
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+
+  if (snap.exists()) {
+    clicks = snap.data().clicks || 0;
+  } else {
+    await setDoc(ref, {
+      username,
+      clicks: 0,
+      created: Date.now()
+    });
+  }
+
+  document.getElementById("game").style.display = "block";
+  document.getElementById("userDisplay").innerText = username;
+
+  updateUI();
+  loadLeaderboard();
+};
+
+/* CLICK SYSTEM (STABLE WRITE) */
+window.clickButton = async function () {
+  if (!ready || !user) return;
+
+  clicks++;
+  updateUI();
+
+  try {
+    await setDoc(doc(db, "users", user.uid), {
+      username,
+      clicks
+    }, { merge: true });
+  } catch (e) {
+    console.error("Click write failed:", e);
+  }
+};
+
+/* UI */
+function updateUI() {
+  document.getElementById("count").innerText = clicks;
+}
+
+/* LEADERBOARD (FAST + CLEAN) */
+function loadLeaderboard() {
+  const q = query(
+    collection(db, "users"),
+    orderBy("clicks", "desc"),
+    limit(10)
+  );
+
+  onSnapshot(q, (snapshot) => {
+    const list = document.getElementById("leaders");
+    list.innerHTML = "";
+
+    let pos = 1;
+    let ticker = "";
+
+    snapshot.forEach((docSnap) => {
+      const d = docSnap.data();
+
+      if (pos <= 3) {
+        ticker += `#${pos} ${d.username} (${d.clicks}) • `;
+      }
+
+      const li = document.createElement("li");
+      li.innerText = `#${pos} ${d.username} - ${d.clicks}`;
+
+      list.appendChild(li);
+      pos++;
+    });
+
+    document.getElementById("tickerText").innerText = ticker;
+  });
+}
+
+/* ONLINE FAKE COUNT (SAFE VISUAL ONLY) */
+setInterval(() => {
+  const el = document.getElementById("online");
+  if (!el) return;
+
+  el.innerText = Math.floor(Math.random() * 40 + 20) + " players battling";
+}, 3000);
+
+</script>
