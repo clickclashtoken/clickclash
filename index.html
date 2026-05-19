@@ -1,64 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ClickClash</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: radial-gradient(circle at top, #0a0a0a, #000);
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00ff99;
+      font-size: 10vw;
+      text-shadow: 0 0 25px #00ff99;
+    }
+
+    .container { max-width: 420px; margin: auto; }
+
+    .box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,255,153,0.2);
+      margin: 12px;
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .big { font-size: 24px; font-weight: bold; }
+    .glow { color: #00ff99; }
+
+    input {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      width: 80%;
+      background: #111;
+      color: white;
+    }
+
+    button {
+      padding: 18px;
+      font-size: 22px;
+      border-radius: 12px;
+      border: none;
+      background: #00ff99;
+      color: black;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    li { list-style: none; padding: 6px; }
+
+    .rank1 { color: gold; }
+    .rank2 { color: silver; }
+    .rank3 { color: #cd7f32; }
+  </style>
+</head>
+
+<body>
+
+<h1>CLICKCLASH</h1>
+
+<div class="container">
+
+  <div class="box">
+    <input id="username" placeholder="Enter username">
+    <br>
+    <button onclick="saveUsername()">ENTER</button>
+  </div>
+
+  <div id="game" style="display:none;">
+    <div class="box">
+      <div id="userDisplay" class="big"></div>
+      <div class="big glow">🔥 <span id="count">0</span></div>
+      <button onclick="clickButton()">TAP</button>
+    </div>
+
+    <div class="box">
+      <div class="big">🏆 LEADERBOARD</div>
+      <ul id="leaders"></ul>
+    </div>
+  </div>
+
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged }
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  onSnapshot,
-  collection,
-  query,
-  orderBy,
-  limit,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-/* FIREBASE */
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
+  apiKey: "AIzaSyD30l_bB2OMuaNPkT7gypFPS4vbzQ2KR9Y",
   authDomain: "clickclash-320b7.firebaseapp.com",
-  projectId: "clickclash-320b7"
+  projectId: "clickclash-320b7",
+  storageBucket: "clickclash-320b7.firebasestorage.app",
+  messagingSenderId: "984825762558",
+  appId: "1:984825762558:web:2774cb8e4814afcbee8baf"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* STATE */
-let user = null;
+let userId = null;
 let username = "";
 let clicks = 0;
-let ready = false;
 
-/* AUTH (SAFE) */
-signInAnonymously(auth);
+signInAnonymously(auth).then(u => userId = u.user.uid);
 
-onAuthStateChanged(auth, async (u) => {
-  if (!u) return;
-  user = u;
-  ready = true;
-});
-
-/* LOGIN */
 window.saveUsername = async function () {
-  if (!ready) return alert("Firebase loading... try again");
+  username = document.getElementById("username").value;
 
-  username = document.getElementById("username").value.trim();
-  if (!username) return alert("Enter username");
-
-  const ref = doc(db, "users", user.uid);
+  const ref = doc(db, "users", userId);
   const snap = await getDoc(ref);
 
   if (snap.exists()) {
-    clicks = snap.data().clicks || 0;
+    clicks = snap.data().clicks;
   } else {
-    await setDoc(ref, {
-      username,
-      clicks: 0,
-      created: Date.now()
-    });
+    await setDoc(ref, { username, clicks: 0 });
   }
 
   document.getElementById("game").style.display = "block";
@@ -68,67 +131,48 @@ window.saveUsername = async function () {
   loadLeaderboard();
 };
 
-/* CLICK SYSTEM (STABLE WRITE) */
 window.clickButton = async function () {
-  if (!ready || !user) return;
-
   clicks++;
-  updateUI();
 
-  try {
-    await setDoc(doc(db, "users", user.uid), {
-      username,
-      clicks
-    }, { merge: true });
-  } catch (e) {
-    console.error("Click write failed:", e);
-  }
+  await setDoc(doc(db, "users", userId), {
+    username,
+    clicks
+  });
+
+  updateUI();
 };
 
-/* UI */
 function updateUI() {
   document.getElementById("count").innerText = clicks;
 }
 
-/* LEADERBOARD (FAST + CLEAN) */
 function loadLeaderboard() {
-  const q = query(
-    collection(db, "users"),
-    orderBy("clicks", "desc"),
-    limit(10)
-  );
+  const q = query(collection(db, "users"), orderBy("clicks", "desc"), limit(10));
 
   onSnapshot(q, (snapshot) => {
     const list = document.getElementById("leaders");
     list.innerHTML = "";
 
     let pos = 1;
-    let ticker = "";
 
     snapshot.forEach((docSnap) => {
-      const d = docSnap.data();
+      const data = docSnap.data();
 
-      if (pos <= 3) {
-        ticker += `#${pos} ${d.username} (${d.clicks}) • `;
-      }
+      let cls = "";
+      if (pos === 1) cls = "rank1";
+      if (pos === 2) cls = "rank2";
+      if (pos === 3) cls = "rank3";
 
       const li = document.createElement("li");
-      li.innerText = `#${pos} ${d.username} - ${d.clicks}`;
+      li.className = cls;
+      li.innerText = `#${pos} ${data.username} - ${data.clicks}`;
 
       list.appendChild(li);
       pos++;
     });
-
-    document.getElementById("tickerText").innerText = ticker;
   });
 }
-
-/* ONLINE FAKE COUNT (SAFE VISUAL ONLY) */
-setInterval(() => {
-  const el = document.getElementById("online");
-  if (!el) return;
-
-  el.innerText = Math.floor(Math.random() * 40 + 20) + " players battling";
-}, 3000);
-
 </script>
+
+</body>
+</html>
