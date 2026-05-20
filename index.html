@@ -8,29 +8,37 @@
     body {
       margin: 0;
       font-family: Arial;
-      background: radial-gradient(circle at top, #0a0a0a, #000);
+      background: radial-gradient(circle at top, #050505, #000);
       color: white;
       text-align: center;
     }
 
     h1 {
       color: #00ff99;
-      font-size: 10vw;
-      text-shadow: 0 0 25px #00ff99;
+      font-size: 11vw;
+      text-shadow: 0 0 30px #00ff99;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
 
     .ticker {
       overflow: hidden;
       white-space: nowrap;
       border-bottom: 1px solid #00ff99;
-      padding: 8px;
+      padding: 6px;
       font-size: 13px;
+      color: #aaa;
     }
 
     .ticker span {
       display: inline-block;
       padding-left: 100%;
-      animation: scroll 18s linear infinite;
+      animation: scroll 15s linear infinite;
     }
 
     @keyframes scroll {
@@ -44,11 +52,11 @@
     }
 
     .box {
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.03);
       border: 1px solid rgba(0,255,153,0.2);
       margin: 12px;
-      padding: 15px;
-      border-radius: 15px;
+      padding: 16px;
+      border-radius: 16px;
     }
 
     .big { font-size: 24px; font-weight: bold; }
@@ -73,13 +81,14 @@
       color: black;
       font-weight: bold;
       margin-top: 10px;
+      box-shadow: 0 0 15px #00ff99;
     }
 
     button:active { transform: scale(0.95); }
 
     li { list-style: none; padding: 6px; }
 
-    .rank1 { color: gold; font-weight: bold; font-size: 18px; }
+    .rank1 { color: gold; font-weight: bold; }
     .rank2 { color: silver; }
     .rank3 { color: #cd7f32; }
 
@@ -92,7 +101,7 @@
       text-align: left;
       font-size: 14px;
       color: #aaa;
-      max-height: 100px;
+      max-height: 120px;
       overflow: hidden;
     }
 
@@ -107,52 +116,61 @@
       border-radius: 10px;
       font-weight: bold;
     }
+
+    .cta {
+      font-size: 14px;
+      color: #aaa;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
 <body>
 
 <h1>CLICKCLASH</h1>
+<div class="subtitle">The only game where early matters</div>
 
 <div class="ticker">
-  <span id="tickerText">Loading arena...</span>
+  <span id="tickerText">Loading activity...</span>
 </div>
 
 <div class="container">
 
   <div class="box">
-    <div class="big glow">⚡ LIVE BATTLE</div>
-    <div id="online">Players joining...</div>
+    <div class="big glow">⚡ LIVE ARENA</div>
+    <div id="online">Initializing...</div>
+    <div style="color:#888;font-size:13px;">Top players dominate the next phase</div>
   </div>
 
   <div class="box">
-    <input id="username" placeholder="Choose username">
+    <input id="username" placeholder="Choose identity">
     <br>
-    <button onclick="saveUsername()">ENTER ARENA</button>
+    <button onclick="saveUsername()">ENTER</button>
   </div>
 
   <div id="game" style="display:none;">
 
     <div class="box">
       <div id="userDisplay" class="big"></div>
+
       <div class="big glow">🔥 <span id="count">0</span> clicks</div>
       <div>🏆 Rank: <span id="rank">-</span></div>
 
       <button onclick="clickButton()">TAP</button>
 
-      <div style="margin-top:10px;font-size:14px;color:#aaa;">
-        👥 Invite friends to tap for you  
-        <br>More taps = higher rank 🚀
+      <div class="cta">
+        Invite others → increase your position  
+        <br>Position = future advantage
       </div>
     </div>
 
     <div class="box">
-      <div class="big">🏆 LEADERBOARD</div>
+      <div class="big">🏆 TOP PLAYERS</div>
       <ul id="leaders"></ul>
     </div>
 
     <div class="box">
-      <div class="big">📡 LIVE ACTIVITY</div>
+      <div class="big">📡 LIVE FEED</div>
       <div id="feed" class="feed"></div>
     </div>
 
@@ -160,9 +178,11 @@
 
   <div class="box">
     <div class="big glow">🪙 $CLICK</div>
-    <div>Launching soon</div>
-    <div>Top players receive rewards</div>
-    <div>Higher rank = higher allocation</div>
+    <div>Launching on Pump.fun</div>
+    <div>Early players gain positioning</div>
+    <div style="color:#888;font-size:13px;">
+      Snapshot timing not announced
+    </div>
   </div>
 
 </div>
@@ -216,7 +236,7 @@ window.clickButton = async function () {
   clicks++;
 
   if (clicks === 50 || clicks === 100 || clicks === 500) {
-    showPopup("🔥 " + clicks + " clicks!");
+    showPopup("🔥 milestone " + clicks);
   }
 
   await setDoc(doc(db, "users", username), {
@@ -225,7 +245,7 @@ window.clickButton = async function () {
   });
 
   updateUI();
-  addFeed(username + " tapped (" + clicks + ")");
+  addFeed(username + " pushing " + clicks);
 };
 
 function updateUI() {
@@ -250,7 +270,7 @@ function loadLeaderboard() {
       else if (pos === 2) medal = "🥈 ";
       else if (pos === 3) medal = "🥉 ";
 
-      ticker += `${data.username} pushing ${data.clicks} • `;
+      ticker += `${data.username} climbing ${data.clicks} • `;
 
       const li = document.createElement("li");
       li.innerText = `${medal}#${pos} ${data.username} - ${data.clicks}`;
@@ -279,7 +299,7 @@ function addFeed(text) {
 
   feed.prepend(line);
 
-  if (feed.children.length > 8) {
+  if (feed.children.length > 10) {
     feed.removeChild(feed.lastChild);
   }
 }
@@ -293,17 +313,17 @@ function showPopup(text) {
 }
 
 setInterval(() => {
-  const names = ["TapGod", "ClickX", "FastFinger", "SpeedTap"];
+  const names = ["Alpha", "Ghost", "Velocity", "Zero"];
   const name = names[Math.floor(Math.random()*names.length)];
-  const num = Math.floor(Math.random()*4000);
+  const num = Math.floor(Math.random()*6000);
 
-  addFeed(name + " reached " + num + " clicks");
-}, 4000);
+  addFeed(name + " reached " + num);
+}, 3500);
 
 setInterval(() => {
   document.getElementById("online").innerText =
-    Math.floor(Math.random() * 60 + 20) + " players battling";
-}, 3000);
+    Math.floor(Math.random() * 80 + 30) + " players active";
+}, 2500);
 
 </script>
 
