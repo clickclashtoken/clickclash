@@ -122,6 +122,24 @@
       color: #aaa;
       margin-top: 10px;
     }
+
+    .token-box {
+      word-break: break-all;
+      font-size: 12px;
+      color: #00ff99;
+      margin-top: 10px;
+    }
+
+    .copy-btn {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 8px;
+      background: #00ff99;
+      border: none;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 
@@ -176,7 +194,6 @@
 
   </div>
 
-  <!-- SOCIALS BLOCK ADDED -->
   <div class="box">
     <div class="big">🌐 COMMUNITY</div>
     <div style="margin-top:10px;">
@@ -192,12 +209,16 @@
     </div>
   </div>
 
+  <!-- UPDATED TOKEN BLOCK -->
   <div class="box">
     <div class="big glow">🪙 $CLICK</div>
-    <div>Launching on Pump.fun</div>
-    <div>Early players gain positioning</div>
+    <div>Live on Pump.fun</div>
+    <div class="token-box" id="tokenAddress">
+      27LgmY7opacnsJat15b6pSLfENvqVZXzaZKXGufHpump
+    </div>
+    <button class="copy-btn" onclick="copyToken()">Copy Address</button>
     <div style="color:#888;font-size:13px;">
-      Snapshot timing not announced
+      Buy early. Position matters.
     </div>
   </div>
 
@@ -225,6 +246,12 @@ let username = "";
 let clicks = 0;
 
 signInAnonymously(auth);
+
+window.copyToken = function () {
+  const text = document.getElementById("tokenAddress").innerText;
+  navigator.clipboard.writeText(text);
+  showPopup("Copied!");
+};
 
 window.saveUsername = async function () {
   username = document.getElementById("username").value.trim().toLowerCase();
