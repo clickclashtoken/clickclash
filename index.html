@@ -127,6 +127,11 @@
 
 <body>
 
+<!-- 🔊 MUSIC ADDED HERE -->
+<audio id="bgm" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <h1>CLICKCLASH</h1>
 <div class="subtitle">The only game where early matters</div>
 
@@ -176,11 +181,10 @@
 
   </div>
 
-  <!-- SOCIALS BLOCK ADDED -->
   <div class="box">
     <div class="big">🌐 COMMUNITY</div>
     <div style="margin-top:10px;">
-      <a href="https://t.me/clickclash" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
+      <a href="https://t.me/clickclasharena" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
         🚀 Join Telegram
       </a>
       <a href="https://x.com/clickclashtoken" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
@@ -211,13 +215,12 @@ import {
   onSnapshot, collection, query, orderBy, limit
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-const firebaseConfig = {
+const app = initializeApp({
   apiKey: "AIzaSyD30l_bB2OMuaNPkT7gypFPS4vbzQ2KR9Y",
   authDomain: "clickclash-320b7.firebaseapp.com",
   projectId: "clickclash-320b7"
-};
+});
 
-const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -243,6 +246,11 @@ window.saveUsername = async function () {
 
   document.getElementById("game").style.display = "block";
   document.getElementById("userDisplay").innerText = username;
+
+  // 🔊 MUSIC START (ONLY AFTER ENTRY)
+  const bgm = document.getElementById("bgm");
+  bgm.volume = 0.4;
+  bgm.play();
 
   updateUI();
   loadLeaderboard();
