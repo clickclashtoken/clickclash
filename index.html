@@ -82,7 +82,6 @@
       font-weight: bold;
       margin-top: 10px;
       box-shadow: 0 0 15px #00ff99;
-      cursor: pointer;
     }
 
     button:active { transform: scale(0.95); }
@@ -123,31 +122,6 @@
       color: #aaa;
       margin-top: 10px;
     }
-
-    .token-box {
-      word-break: break-all;
-      font-size: 12px;
-      color: #00ff99;
-      margin-top: 10px;
-    }
-
-    .copy-btn {
-      margin-top: 10px;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 8px;
-      background: #00ff99;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .countdown {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #ff4d4d;
-    }
-
   </style>
 </head>
 
@@ -202,33 +176,28 @@
 
   </div>
 
+  <!-- SOCIALS BLOCK ADDED -->
   <div class="box">
     <div class="big">🌐 COMMUNITY</div>
-    <a href="https://t.me/clickclasharena" target="_blank">🚀 Telegram</a><br>
-    <a href="https://x.com/clickclashtoken" target="_blank">🐦 X</a>
+    <div style="margin-top:10px;">
+      <a href="https://t.me/clickclasharena" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
+        🚀 Join Telegram
+      </a>
+      <a href="https://x.com/clickclashtoken" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
+        🐦 Follow on X
+      </a>
+    </div>
+    <div style="color:#888;font-size:13px;">
+      Early members get the edge
+    </div>
   </div>
 
-  <!-- MONEY BLOCK -->
   <div class="box">
     <div class="big glow">🪙 $CLICK</div>
-    <div>LIVE NOW ON PUMP.FUN</div>
-
-    <div class="token-box" id="tokenAddress">
-      27LgmY7opacnsJat15b6pSLfENvqVZXzaZKXGufHpump
-    </div>
-
-    <button class="copy-btn" onclick="copyToken()">Copy Address</button>
-
-    <a href="https://pump.fun/coin/27LgmY7opacnsJat15b6pSLfENvqVZXzaZKXGufHpump" target="_blank">
-      <button style="width:90%;">🚀 BUY NOW</button>
-    </a>
-
-    <div class="countdown">
-      ⏳ Next phase in: <span id="countdown">--:--</span>
-    </div>
-
+    <div>Launching on Pump.fun</div>
+    <div>Early players gain positioning</div>
     <div style="color:#888;font-size:13px;">
-      Early buyers dominate distribution
+      Snapshot timing not announced
     </div>
   </div>
 
@@ -257,33 +226,20 @@ let clicks = 0;
 
 signInAnonymously(auth);
 
-// COPY TOKEN
-window.copyToken = function () {
-  const text = document.getElementById("tokenAddress").innerText;
-  navigator.clipboard.writeText(text);
-  showPopup("Copied!");
-};
-
-// COUNTDOWN
-let timeLeft = 900;
-setInterval(() => {
-  let m = Math.floor(timeLeft / 60);
-  let s = timeLeft % 60;
-  document.getElementById("countdown").innerText =
-    `${m}:${s < 10 ? "0" : ""}${s}`;
-  timeLeft--;
-  if (timeLeft <= 0) timeLeft = 900;
-}, 1000);
-
 window.saveUsername = async function () {
   username = document.getElementById("username").value.trim().toLowerCase();
+
   if (!username) return alert("Enter username");
 
   const ref = doc(db, "users", username);
   const snap = await getDoc(ref);
 
-  if (snap.exists()) clicks = snap.data().clicks;
-  else await setDoc(ref, { username, clicks: 0 });
+  if (snap.exists()) {
+    clicks = snap.data().clicks;
+  } else {
+    await setDoc(ref, { username, clicks: 0 });
+    clicks = 0;
+  }
 
   document.getElementById("game").style.display = "block";
   document.getElementById("userDisplay").innerText = username;
@@ -294,8 +250,18 @@ window.saveUsername = async function () {
 
 window.clickButton = async function () {
   clicks++;
-  await setDoc(doc(db, "users", username), { username, clicks });
+
+  if (clicks === 50 || clicks === 100 || clicks === 500) {
+    showPopup("🔥 milestone " + clicks);
+  }
+
+  await setDoc(doc(db, "users", username), {
+    username,
+    clicks
+  });
+
   updateUI();
+  addFeed(username + " pushing " + clicks);
 };
 
 function updateUI() {
@@ -304,18 +270,54 @@ function updateUI() {
 
 function loadLeaderboard() {
   const q = query(collection(db, "users"), orderBy("clicks", "desc"), limit(10));
+
   onSnapshot(q, (snap) => {
     const list = document.getElementById("leaders");
     list.innerHTML = "";
+
     let pos = 1;
+    let ticker = "";
+
     snap.forEach((d) => {
       const data = d.data();
+
+      let medal = "";
+      if (pos === 1) medal = "🥇 ";
+      else if (pos === 2) medal = "🥈 ";
+      else if (pos === 3) medal = "🥉 ";
+
+      ticker += `${data.username} climbing ${data.clicks} • `;
+
       const li = document.createElement("li");
-      li.innerText = `#${pos} ${data.username} - ${data.clicks}`;
+      li.innerText = `${medal}#${pos} ${data.username} - ${data.clicks}`;
+
+      if (data.username === username) {
+        li.classList.add("me");
+        document.getElementById("rank").innerText = "#" + pos;
+      }
+
+      if (pos === 1) li.classList.add("rank1");
+      if (pos === 2) li.classList.add("rank2");
+      if (pos === 3) li.classList.add("rank3");
+
       list.appendChild(li);
       pos++;
     });
+
+    document.getElementById("tickerText").innerText = ticker;
   });
+}
+
+function addFeed(text) {
+  const feed = document.getElementById("feed");
+  const line = document.createElement("div");
+  line.innerText = text;
+
+  feed.prepend(line);
+
+  if (feed.children.length > 10) {
+    feed.removeChild(feed.lastChild);
+  }
 }
 
 function showPopup(text) {
@@ -325,6 +327,20 @@ function showPopup(text) {
   document.body.appendChild(div);
   setTimeout(() => div.remove(), 1500);
 }
+
+setInterval(() => {
+  const names = ["Alpha", "Ghost", "Velocity", "Zero"];
+  const name = names[Math.floor(Math.random()*names.length)];
+  const num = Math.floor(Math.random()*6000);
+
+  addFeed(name + " reached " + num);
+}, 3500);
+
+setInterval(() => {
+  document.getElementById("online").innerText =
+    Math.floor(Math.random() * 80 + 30) + " players active";
+}, 2500);
+
 </script>
 
 </body>
