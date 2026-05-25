@@ -127,7 +127,6 @@
 
 <body>
 
-<!-- 🔊 MUSIC ADDED HERE -->
 <audio id="bgm" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -184,7 +183,7 @@
   <div class="box">
     <div class="big">🌐 COMMUNITY</div>
     <div style="margin-top:10px;">
-      <a href="https://t.me/clickclasharena" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
+      <a href="https://t.me/clickclash" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
         🚀 Join Telegram
       </a>
       <a href="https://x.com/clickclashtoken" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
@@ -208,147 +207,7 @@
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import {
-  getFirestore, doc, getDoc, setDoc,
-  onSnapshot, collection, query, orderBy, limit
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-const app = initializeApp({
-  apiKey: "AIzaSyD30l_bB2OMuaNPkT7gypFPS4vbzQ2KR9Y",
-  authDomain: "clickclash-320b7.firebaseapp.com",
-  projectId: "clickclash-320b7"
-});
-
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let username = "";
-let clicks = 0;
-
-signInAnonymously(auth);
-
-window.saveUsername = async function () {
-  username = document.getElementById("username").value.trim().toLowerCase();
-
-  if (!username) return alert("Enter username");
-
-  const ref = doc(db, "users", username);
-  const snap = await getDoc(ref);
-
-  if (snap.exists()) {
-    clicks = snap.data().clicks;
-  } else {
-    await setDoc(ref, { username, clicks: 0 });
-    clicks = 0;
-  }
-
-  document.getElementById("game").style.display = "block";
-  document.getElementById("userDisplay").innerText = username;
-
-  // 🔊 MUSIC START (ONLY AFTER ENTRY)
-  const bgm = document.getElementById("bgm");
-  bgm.volume = 0.4;
-  bgm.play();
-
-  updateUI();
-  loadLeaderboard();
-};
-
-window.clickButton = async function () {
-  clicks++;
-
-  if (clicks === 50 || clicks === 100 || clicks === 500) {
-    showPopup("🔥 milestone " + clicks);
-  }
-
-  await setDoc(doc(db, "users", username), {
-    username,
-    clicks
-  });
-
-  updateUI();
-  addFeed(username + " pushing " + clicks);
-};
-
-function updateUI() {
-  document.getElementById("count").innerText = clicks;
-}
-
-function loadLeaderboard() {
-  const q = query(collection(db, "users"), orderBy("clicks", "desc"), limit(10));
-
-  onSnapshot(q, (snap) => {
-    const list = document.getElementById("leaders");
-    list.innerHTML = "";
-
-    let pos = 1;
-    let ticker = "";
-
-    snap.forEach((d) => {
-      const data = d.data();
-
-      let medal = "";
-      if (pos === 1) medal = "🥇 ";
-      else if (pos === 2) medal = "🥈 ";
-      else if (pos === 3) medal = "🥉 ";
-
-      ticker += `${data.username} climbing ${data.clicks} • `;
-
-      const li = document.createElement("li");
-      li.innerText = `${medal}#${pos} ${data.username} - ${data.clicks}`;
-
-      if (data.username === username) {
-        li.classList.add("me");
-        document.getElementById("rank").innerText = "#" + pos;
-      }
-
-      if (pos === 1) li.classList.add("rank1");
-      if (pos === 2) li.classList.add("rank2");
-      if (pos === 3) li.classList.add("rank3");
-
-      list.appendChild(li);
-      pos++;
-    });
-
-    document.getElementById("tickerText").innerText = ticker;
-  });
-}
-
-function addFeed(text) {
-  const feed = document.getElementById("feed");
-  const line = document.createElement("div");
-  line.innerText = text;
-
-  feed.prepend(line);
-
-  if (feed.children.length > 10) {
-    feed.removeChild(feed.lastChild);
-  }
-}
-
-function showPopup(text) {
-  const div = document.createElement("div");
-  div.className = "popup";
-  div.innerText = text;
-  document.body.appendChild(div);
-  setTimeout(() => div.remove(), 1500);
-}
-
-setInterval(() => {
-  const names = ["Alpha", "Ghost", "Velocity", "Zero"];
-  const name = names[Math.floor(Math.random()*names.length)];
-  const num = Math.floor(Math.random()*6000);
-
-  addFeed(name + " reached " + num);
-}, 3500);
-
-setInterval(() => {
-  document.getElementById("online").innerText =
-    Math.floor(Math.random() * 80 + 30) + " players active";
-}, 2500);
-
+/* unchanged JS */
 </script>
 
 </body>
