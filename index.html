@@ -127,31 +127,22 @@
 
 <body>
 
-<audio id="bgm" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
 <h1>CLICKCLASH</h1>
 <div class="subtitle">The only game where early matters</div>
 
 <div class="ticker">
-  <span id="tickerText">
-    ⚡ Smart players are already positioning early &nbsp;&nbsp;&nbsp;&nbsp;
-    🔥 The ones in Telegram will always be ahead &nbsp;&nbsp;&nbsp;&nbsp;
-    🚀 Momentum is building behind the scenes &nbsp;&nbsp;&nbsp;&nbsp;
-    👀 Accumulation phase is where winners are made &nbsp;&nbsp;&nbsp;&nbsp;
-    💰 Early buyers always control the outcome &nbsp;&nbsp;&nbsp;&nbsp;
-    ⏳ The window to get in early is closing &nbsp;&nbsp;&nbsp;&nbsp;
-    📈 Strong hands are quietly stacking &nbsp;&nbsp;&nbsp;&nbsp;
-    ⚠️ If you're not in Telegram, you're already behind &nbsp;&nbsp;&nbsp;&nbsp;
-    🏆 The top players are not here by accident &nbsp;&nbsp;&nbsp;&nbsp;
-    🔒 Access and information flows through Telegram &nbsp;&nbsp;&nbsp;&nbsp;
-    💎 Early conviction creates the biggest gains &nbsp;&nbsp;&nbsp;&nbsp;
-    🚨 Late entries always pay the highest price &nbsp;&nbsp;&nbsp;&nbsp;
-    📊 Growth doesn’t wait for hesitation &nbsp;&nbsp;&nbsp;&nbsp;
-    🎯 The crowd arrives after the move happens &nbsp;&nbsp;&nbsp;&nbsp;
-    🔥 This phase separates winners from spectators
-  </span>
+<span id="tickerText">
+⚡ Attention always comes before listings &nbsp;&nbsp;&nbsp;&nbsp;
+🔥 The biggest tokens started exactly like this &nbsp;&nbsp;&nbsp;&nbsp;
+🚀 Early positioning decides who wins later &nbsp;&nbsp;&nbsp;&nbsp;
+📈 Volume is what exchanges follow &nbsp;&nbsp;&nbsp;&nbsp;
+👀 Smart players accumulate before visibility &nbsp;&nbsp;&nbsp;&nbsp;
+💰 Most people only arrive after the move &nbsp;&nbsp;&nbsp;&nbsp;
+🏆 Leaderboard today = advantage tomorrow &nbsp;&nbsp;&nbsp;&nbsp;
+⚠️ If you're late, you're exit liquidity &nbsp;&nbsp;&nbsp;&nbsp;
+🎯 This phase is where control is built &nbsp;&nbsp;&nbsp;&nbsp;
+🔥 Momentum here turns into listings later
+</span>
 </div>
 
 <div class="container">
@@ -196,18 +187,39 @@
 
   </div>
 
+  <!-- NEW HYPE SECTION -->
   <div class="box">
-    <div class="big">🌐 COMMUNITY</div>
+    <div class="big glow">🚀 NEXT WAVE</div>
+
     <div style="margin-top:10px;">
-      <a href="https://t.me/clickclash" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
-        🚀 Join Telegram
-      </a>
-      <a href="https://x.com/clickclashtoken" target="_blank" style="display:block; margin:8px; color:#00ff99; text-decoration:none; font-weight:bold;">
-        🐦 Follow on X
-      </a>
+      The projects that dominate attention early…
+      <br><br>
+      are the ones exchanges start watching.
     </div>
-    <div style="color:#888;font-size:13px;">
-      Early members get the edge
+
+    <div style="margin-top:10px; color:#00ff99; font-weight:bold;">
+      ⚡ This is where positioning happens before the crowd
+    </div>
+
+    <div style="margin-top:10px; font-size:13px; color:#888;">
+      Volume. Attention. Community.
+      <br>
+      That’s what turns unknown tokens into global listings.
+    </div>
+  </div>
+
+  <!-- CMC TRACKING -->
+  <div class="box">
+    <div class="big">📊 MARKET TRACKING</div>
+
+    <a href="https://dex.coinmarketcap.com/token/Solana/3x6apzqJKgf33zet8CbkAx7LogqkRhNX6FiRzVA5pump"
+       target="_blank"
+       style="display:block; margin:10px; color:#00ff99; font-weight:bold; text-decoration:none;">
+       🔎 Track Activity on CoinMarketCap
+    </a>
+
+    <div style="font-size:13px; color:#888;">
+      Smart money watches before listings happen
     </div>
   </div>
 
@@ -216,154 +228,32 @@
     <div>Launching on Pump.fun</div>
     <div>Early players gain positioning</div>
     <div style="color:#888;font-size:13px;">
-      Snapshot timing not announced
+      The next big thing isn’t announced… it’s accumulated early
     </div>
   </div>
 
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import {
-  getFirestore, doc, getDoc, setDoc,
-  onSnapshot, collection, query, orderBy, limit
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-const app = initializeApp({
-  apiKey: "AIzaSyD30l_bB2OMuaNPkT7gypFPS4vbzQ2KR9Y",
-  authDomain: "clickclash-320b7.firebaseapp.com",
-  projectId: "clickclash-320b7"
-});
-
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-let username = "";
-let clicks = 0;
-
-signInAnonymously(auth);
-
-window.saveUsername = async function () {
-  username = document.getElementById("username").value.trim().toLowerCase();
-
-  if (!username) return alert("Enter username");
-
-  const ref = doc(db, "users", username);
-  const snap = await getDoc(ref);
-
-  if (snap.exists()) {
-    clicks = snap.data().clicks;
-  } else {
-    await setDoc(ref, { username, clicks: 0 });
-    clicks = 0;
-  }
-
-  document.getElementById("game").style.display = "block";
-  document.getElementById("userDisplay").innerText = username;
-
-  const bgm = document.getElementById("bgm");
-  bgm.volume = 0.4;
-  bgm.play();
-
-  updateUI();
-  loadLeaderboard();
-};
-
-window.clickButton = async function () {
-  clicks++;
-
-  if (clicks === 50 || clicks === 100 || clicks === 500) {
-    showPopup("🔥 milestone " + clicks);
-  }
-
-  await setDoc(doc(db, "users", username), {
-    username,
-    clicks
-  });
-
-  updateUI();
-  addFeed(username + " pushing " + clicks);
-};
-
-function updateUI() {
-  document.getElementById("count").innerText = clicks;
-}
-
-function loadLeaderboard() {
-  const q = query(collection(db, "users"), orderBy("clicks", "desc"), limit(10));
-
-  onSnapshot(q, (snap) => {
-    const list = document.getElementById("leaders");
-    list.innerHTML = "";
-
-    let pos = 1;
-    let ticker = "";
-
-    snap.forEach((d) => {
-      const data = d.data();
-
-      let medal = "";
-      if (pos === 1) medal = "🥇 ";
-      else if (pos === 2) medal = "🥈 ";
-      else if (pos === 3) medal = "🥉 ";
-
-      ticker += `${data.username} climbing ${data.clicks} • `;
-
-      const li = document.createElement("li");
-      li.innerText = `${medal}#${pos} ${data.username} - ${data.clicks}`;
-
-      if (data.username === username) {
-        li.classList.add("me");
-        document.getElementById("rank").innerText = "#" + pos;
-      }
-
-      if (pos === 1) li.classList.add("rank1");
-      if (pos === 2) li.classList.add("rank2");
-      if (pos === 3) li.classList.add("rank3");
-
-      list.appendChild(li);
-      pos++;
-    });
-
-    document.getElementById("tickerText").innerText = ticker;
-  });
-}
-
+<script>
 function addFeed(text) {
   const feed = document.getElementById("feed");
   const line = document.createElement("div");
   line.innerText = text;
-
   feed.prepend(line);
-
-  if (feed.children.length > 10) {
-    feed.removeChild(feed.lastChild);
-  }
-}
-
-function showPopup(text) {
-  const div = document.createElement("div");
-  div.className = "popup";
-  div.innerText = text;
-  document.body.appendChild(div);
-  setTimeout(() => div.remove(), 1500);
 }
 
 setInterval(() => {
   const names = ["Alpha", "Ghost", "Velocity", "Zero"];
   const name = names[Math.floor(Math.random()*names.length)];
   const num = Math.floor(Math.random()*6000);
-
   addFeed(name + " reached " + num);
-}, 3500);
+}, 3000);
 
 setInterval(() => {
   document.getElementById("online").innerText =
     Math.floor(Math.random() * 80 + 30) + " players active";
-}, 2500);
-
+}, 2000);
 </script>
 
 </body>
-</html>
+  </html>
