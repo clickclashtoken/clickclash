@@ -12,7 +12,6 @@
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
 
-      /* ONLY FIX ADDED HERE (prevents white screen) */
       min-height: 100vh;
       height: 100vh;
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
@@ -45,6 +44,24 @@
       }
     }
 
+    /* CENTER BUTTON */
+    #playBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+
+      padding: 15px 25px;
+      border: none;
+      border-radius: 30px;
+      background: white;
+      color: #ff4d6d;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
     .floating-img {
       position: absolute;
       width: 90px;
@@ -61,13 +78,6 @@
       100% { transform: translateY(0) rotate(0deg); }
     }
 
-    .hearts {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
     .heart {
       position: absolute;
       color: rgba(255,255,255,0.7);
@@ -75,28 +85,8 @@
     }
 
     @keyframes rise {
-      0% {
-        transform: translateY(100vh);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh);
-        opacity: 0;
-      }
-    }
-
-    #playBtn {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 20;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      background: white;
-      color: #ff4d6d;
-      font-weight: bold;
-      cursor: pointer;
+      0% { transform: translateY(100vh); opacity: 1; }
+      100% { transform: translateY(-10vh); opacity: 0; }
     }
 
   </style>
@@ -111,53 +101,54 @@
     <source src="love.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- FALLBACK BUTTON -->
+  <!-- CENTER BUTTON -->
   <button id="playBtn" onclick="playMusic()">Play Music 🎵</button>
 
   <!-- IMAGES -->
   <div id="images"></div>
-
-  <!-- HEARTS -->
-  <div class="hearts" id="hearts"></div>
 
   <script>
     function playMusic() {
       const music = document.getElementById("bgMusic");
       music.play();
       document.getElementById("playBtn").style.display = "none";
+      loadImages();
+      startHearts();
     }
 
-    const container = document.getElementById("images");
+    // SCATTER IMAGES RANDOMLY
+    function loadImages() {
+      const container = document.getElementById("images");
 
-    for (let i = 1; i <= 30; i++) {
-      const img = document.createElement("img");
-      img.src = i + ".jpg";
-      img.classList.add("floating-img");
+      for (let i = 1; i <= 30; i++) {
+        const img = document.createElement("img");
+        img.src = i + ".jpg";
+        img.classList.add("floating-img");
 
-      img.style.top = (i * 3 % 90) + "vh";
-      img.style.left = (i * 7 % 90) + "vw";
+        img.style.top = Math.random() * 90 + "vh";
+        img.style.left = Math.random() * 90 + "vw";
 
-      img.style.animationDelay = (i * 0.25) + "s";
+        img.style.animationDelay = (Math.random() * 3) + "s";
 
-      container.appendChild(img);
+        container.appendChild(img);
+      }
     }
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
 
-      document.getElementById("hearts").appendChild(heart);
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+        heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
 
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+      }, 250);
     }
-
-    setInterval(createHeart, 250);
   </script>
 
 </body>
