@@ -12,10 +12,10 @@
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
 
-      /* FIXED BACKGROUND (no more white screen) */
+      /* ONLY FIX ADDED HERE (prevents white screen) */
       min-height: 100vh;
       height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3, #ff4d6d);
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
       background-attachment: fixed;
 
       color: white;
@@ -121,14 +121,12 @@
   <div class="hearts" id="hearts"></div>
 
   <script>
-    // PLAY MUSIC (FIX AUTOPLAY BLOCK)
     function playMusic() {
       const music = document.getElementById("bgMusic");
       music.play();
       document.getElementById("playBtn").style.display = "none";
     }
 
-    // LOAD 30 IMAGES
     const container = document.getElementById("images");
 
     for (let i = 1; i <= 30; i++) {
@@ -136,17 +134,14 @@
       img.src = i + ".jpg";
       img.classList.add("floating-img");
 
-      // Balanced layout
       img.style.top = (i * 3 % 90) + "vh";
       img.style.left = (i * 7 % 90) + "vw";
 
-      // Smooth stagger animation
       img.style.animationDelay = (i * 0.25) + "s";
 
       container.appendChild(img);
     }
 
-    // HEART EFFECT
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
