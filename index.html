@@ -11,47 +11,72 @@
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
       color: white;
       text-align: center;
+      animation: bgZoom 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes bgZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
     }
 
     h1 {
       font-size: 3rem;
       position: absolute;
       width: 100%;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 20%;
       opacity: 0;
-      animation: slideFade 3s ease forwards;
+      animation: fadeIn 3s ease forwards;
       z-index: 10;
       text-shadow: 0 5px 20px rgba(0,0,0,0.3);
     }
 
-    @keyframes slideFade {
-      0% {
-        transform: translateY(-100px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(-50%);
-        opacity: 1;
-      }
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
+    /* CENTER BUTTON */
+    #playBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 50px;
+      background: white;
+      color: #ff4d6d;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 20;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+      70% { box-shadow: 0 0 0 20px rgba(255,255,255,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+    }
+
+    /* IMAGES */
     .floating-img {
       position: absolute;
-      width: 90px;
-      height: 90px;
+      width: 80px;
+      height: 80px;
       border-radius: 12px;
       object-fit: cover;
-      animation: float 12s infinite ease-in-out;
-      opacity: 0.9;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: floatZoom 10s infinite ease-in-out;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(6deg); }
-      100% { transform: translateY(0) rotate(0deg); }
+    @keyframes floatZoom {
+      0% { transform: translateY(0) scale(0.5); opacity: 0; }
+      50% { transform: translateY(-40px) scale(1); opacity: 1; }
+      100% { transform: translateY(0) scale(0.5); opacity: 0; }
     }
 
+    /* HEARTS */
     .hearts {
       position: absolute;
       width: 100%;
@@ -76,43 +101,36 @@
       }
     }
 
-    #playBtn {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 20;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      background: white;
-      color: #ff4d6d;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-  </style></head><body>  <h1>I love you Thandolwethu Mabuza ❤️</h1>  <!-- MUSIC -->  <audio id="bgMusic" autoplay loop>
+  </style></head><body>  <h1>I love you Thandolwethu Mabuza ❤️</h1>  <!-- MUSIC -->  <audio id="bgMusic" loop>
     <source src="love.mp3" type="audio/mpeg">
-  </audio>  <!-- PLAY BUTTON (in case autoplay is blocked) --><button id="playBtn" onclick="playMusic()">Play Music 🎵</button>
+  </audio>  <!-- CENTER BUTTON --><button id="playBtn" onclick="startExperience()">Tap to Start ❤️</button>
 
   <!-- IMAGES -->  <div id="images"></div>  <!-- HEARTS -->  <div class="hearts" id="hearts"></div>  <script>
-    function playMusic() {
-      const music = document.getElementById("bgMusic");
-      music.play();
+    function startExperience() {
+      document.getElementById("bgMusic").play();
       document.getElementById("playBtn").style.display = "none";
+      showImages();
     }
 
-    const container = document.getElementById("images");
+    function showImages() {
+      const container = document.getElementById("images");
 
-    for (let i = 1; i <= 30; i++) {
-      const img = document.createElement("img");
-      img.src = i + ".jpg";
-      img.classList.add("floating-img");
+      for (let i = 1; i <= 30; i++) {
+        const img = document.createElement("img");
+        img.src = i + ".jpg";
+        img.classList.add("floating-img");
 
-      img.style.top = (i * 3 % 90) + "vh";
-      img.style.left = (i * 7 % 90) + "vw";
-      img.style.animationDelay = (i * 0.25) + "s";
+        // Spread in circle-like pattern
+        const angle = (i / 30) * 2 * Math.PI;
+        const radius = 30;
 
-      container.appendChild(img);
+        img.style.top = (50 + radius * Math.sin(angle)) + "vh";
+        img.style.left = (50 + radius * Math.cos(angle)) + "vw";
+
+        img.style.animationDelay = (i * 0.3) + "s";
+
+        container.appendChild(img);
+      }
     }
 
     function createHeart() {
@@ -126,97 +144,9 @@
 
       document.getElementById("hearts").appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
+      setTimeout(() => heart.remove(), 5000);
     }
 
     setInterval(createHeart, 250);
   </script></body>
-</html>      }
-    }
-
-    .floating-img {
-      position: absolute;
-      width: 120px;
-      border-radius: 15px;
-      animation: float 10s infinite ease-in-out;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-50px) rotate(10deg); }
-      100% { transform: translateY(0) rotate(0deg); }
-    }
-
-    .img1 { top: 10%; left: 10%; animation-delay: 0s; }
-    .img2 { top: 70%; left: 20%; animation-delay: 2s; }
-    .img3 { top: 20%; right: 10%; animation-delay: 4s; }
-    .img4 { bottom: 10%; right: 20%; animation-delay: 6s; }
-
-    .hearts {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .heart {
-      position: absolute;
-      color: rgba(255,255,255,0.7);
-      animation: rise 5s linear infinite;
-    }
-
-    @keyframes rise {
-      0% {
-        transform: translateY(100vh);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh);
-        opacity: 0;
-      }
-    }
-
-  </style>
-</head>
-
-<body>
-
-  <h1>I love you Thandolwethu Mabuza ❤️</h1>
-
-  <!-- Floating Images -->
-  <img src="img1.jpg" class="floating-img img1">
-  <img src="img2.jpg" class="floating-img img2">
-  <img src="img3.jpg" class="floating-img img3">
-  <img src="img4.jpg" class="floating-img img4">
-
-  <!-- Background Music -->
-  <audio autoplay loop>
-    <source src="your-song.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Hearts Animation -->
-  <div class="hearts" id="hearts"></div>
-
-  <script>
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = Math.random() * 20 + 10 + "px";
-      heart.style.animationDuration = Math.random() * 3 + 3 + "s";
-
-      document.getElementById("hearts").appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }
-
-    setInterval(createHeart, 300);
-  </script>
-
-</body>
 </html>
