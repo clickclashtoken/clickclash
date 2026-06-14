@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Love You ❤️</title>
-
-  <style>
+  <title>I Love You ❤️</title>  <style>
     body {
       margin: 0;
       padding: 0;
@@ -20,21 +17,123 @@
       font-size: 3rem;
       position: absolute;
       width: 100%;
-      top: 40%;
+      top: 50%;
       transform: translateY(-50%);
       opacity: 0;
-      animation: slideIn 3s ease forwards;
+      animation: slideFade 3s ease forwards;
+      z-index: 10;
+      text-shadow: 0 5px 20px rgba(0,0,0,0.3);
     }
 
-    @keyframes slideIn {
+    @keyframes slideFade {
       0% {
         transform: translateY(-100px);
         opacity: 0;
       }
       100% {
-        transform: translateY(0);
+        transform: translateY(-50%);
         opacity: 1;
       }
+    }
+
+    .floating-img {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      object-fit: cover;
+      animation: float 12s infinite ease-in-out;
+      opacity: 0.9;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(6deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      color: rgba(255,255,255,0.7);
+      animation: rise 5s linear infinite;
+    }
+
+    @keyframes rise {
+      0% {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh);
+        opacity: 0;
+      }
+    }
+
+    #playBtn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 20;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: #ff4d6d;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+  </style></head><body>  <h1>I love you Thandolwethu Mabuza ❤️</h1>  <!-- MUSIC -->  <audio id="bgMusic" autoplay loop>
+    <source src="love.mp3" type="audio/mpeg">
+  </audio>  <!-- PLAY BUTTON (in case autoplay is blocked) --><button id="playBtn" onclick="playMusic()">Play Music 🎵</button>
+
+  <!-- IMAGES -->  <div id="images"></div>  <!-- HEARTS -->  <div class="hearts" id="hearts"></div>  <script>
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.play();
+      document.getElementById("playBtn").style.display = "none";
+    }
+
+    const container = document.getElementById("images");
+
+    for (let i = 1; i <= 30; i++) {
+      const img = document.createElement("img");
+      img.src = i + ".jpg";
+      img.classList.add("floating-img");
+
+      img.style.top = (i * 3 % 90) + "vh";
+      img.style.left = (i * 7 % 90) + "vw";
+      img.style.animationDelay = (i * 0.25) + "s";
+
+      container.appendChild(img);
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+      document.getElementById("hearts").appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    setInterval(createHeart, 250);
+  </script></body>
+</html>      }
     }
 
     .floating-img {
