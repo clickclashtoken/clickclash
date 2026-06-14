@@ -1,14 +1,23 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Love You ❤️</title>  <style>
+  <title>I Love You ❤️</title>
+
+  <style>
     body {
       margin: 0;
       padding: 0;
       overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+
+      /* FIXED BACKGROUND (no more white screen) */
+      min-height: 100vh;
+      height: 100vh;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #ff4d6d);
+      background-attachment: fixed;
+
       color: white;
       text-align: center;
     }
@@ -90,11 +99,28 @@
       cursor: pointer;
     }
 
-  </style></head><body>  <h1>I love you Thandolwethu Mabuza ❤️</h1>  <!-- MUSIC -->  <audio id="bgMusic" autoplay loop>
-    <source src="love.mp3" type="audio/mpeg">
-  </audio>  <!-- FALLBACK BUTTON --><button id="playBtn" onclick="playMusic()">Play Music 🎵</button>
+  </style>
+</head>
 
-  <!-- IMAGES -->  <div id="images"></div>  <!-- HEARTS -->  <div class="hearts" id="hearts"></div>  <script>
+<body>
+
+  <h1>I love you Thandolwethu Mabuza ❤️</h1>
+
+  <!-- MUSIC -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="love.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- FALLBACK BUTTON -->
+  <button id="playBtn" onclick="playMusic()">Play Music 🎵</button>
+
+  <!-- IMAGES -->
+  <div id="images"></div>
+
+  <!-- HEARTS -->
+  <div class="hearts" id="hearts"></div>
+
+  <script>
     // PLAY MUSIC (FIX AUTOPLAY BLOCK)
     function playMusic() {
       const music = document.getElementById("bgMusic");
@@ -137,5 +163,7 @@
     }
 
     setInterval(createHeart, 250);
-  </script></body>
+  </script>
+
+</body>
 </html>
