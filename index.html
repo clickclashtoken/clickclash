@@ -15,25 +15,39 @@
       min-height: 100vh;
       height: 100vh;
       background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      background-attachment: fixed;
+
       color: white;
       text-align: center;
     }
 
-    /* CENTER MESSAGE */
     h1 {
       font-size: 3rem;
       position: absolute;
+      width: 100%;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateY(-50%);
+      opacity: 0;
+      animation: slideFade 3s ease forwards;
       z-index: 10;
-      text-shadow: 0 5px 20px rgba(0,0,0,0.4);
+      text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    @keyframes slideFade {
+      0% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(-50%);
+        opacity: 1;
+      }
     }
 
     /* CENTER BUTTON */
     #playBtn {
       position: absolute;
-      top: 58%;
+      top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 20;
@@ -45,19 +59,25 @@
       color: #ff4d6d;
       font-weight: bold;
       cursor: pointer;
+      font-size: 1rem;
     }
 
-    /* IMAGES */
     .floating-img {
       position: absolute;
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
       border-radius: 12px;
       object-fit: cover;
+      animation: float 12s infinite ease-in-out;
       opacity: 0.9;
     }
 
-    /* HEARTS */
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(6deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
     .heart {
       position: absolute;
       color: rgba(255,255,255,0.7);
@@ -76,59 +96,44 @@
 
   <h1>I love you Thandolwethu Mabuza ❤️</h1>
 
-  <button id="playBtn" onclick="start()">Play Music 🎵</button>
-
-  <audio id="music" loop>
+  <!-- MUSIC -->
+  <audio id="bgMusic" autoplay loop>
     <source src="love.mp3" type="audio/mpeg">
   </audio>
 
+  <!-- CENTER BUTTON -->
+  <button id="playBtn" onclick="playMusic()">Play Music 🎵</button>
+
+  <!-- IMAGES -->
   <div id="images"></div>
 
   <script>
-    function start() {
-      document.getElementById("music").play();
+    function playMusic() {
+      const music = document.getElementById("bgMusic");
+      music.play();
       document.getElementById("playBtn").style.display = "none";
-
-      createOrbitImages();
+      loadImages();
       startHearts();
     }
 
-    /* ORBIT ANIMATION AROUND CENTER */
-    function createOrbitImages() {
+    // SCATTER IMAGES RANDOMLY
+    function loadImages() {
       const container = document.getElementById("images");
-
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-
-      const radius = 200;
 
       for (let i = 1; i <= 30; i++) {
         const img = document.createElement("img");
         img.src = i + ".jpg";
         img.classList.add("floating-img");
 
+        img.style.top = Math.random() * 90 + "vh";
+        img.style.left = Math.random() * 90 + "vw";
+
+        img.style.animationDelay = (Math.random() * 3) + "s";
+
         container.appendChild(img);
-
-        let angle = (i / 30) * Math.PI * 2;
-        let speed = 0.002 + Math.random() * 0.002;
-
-        function animate() {
-          angle += speed;
-
-          const x = centerX + radius * Math.cos(angle);
-          const y = centerY + radius * Math.sin(angle);
-
-          img.style.left = x + "px";
-          img.style.top = y + "px";
-
-          requestAnimationFrame(animate);
-        }
-
-        animate();
       }
     }
 
-    /* HEARTS */
     function startHearts() {
       setInterval(() => {
         const heart = document.createElement("div");
