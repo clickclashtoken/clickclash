@@ -243,4 +243,783 @@ a.ci-val:hover{color:var(--gold)}
 
 /* ── FOOTER ─────────────────────────────────────────── */
 footer{background:var(--ink);border-top:1px solid var(--gold-line)}
-.foot-g{display:g
+.foot-g{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:clamp(2rem,5vw,4rem);padding-block:clamp(3rem,7vw,5rem)}
+.foot-brand .nav-name{margin-bottom:.75rem}
+.foot-logo-img{height:60px;width:auto}
+.foot-tagline{font-size:.85rem;color:var(--silver);line-height:1.6;font-style:italic;margin-bottom:.5rem}
+.foot-note{font-size:.72rem;color:#555;letter-spacing:.04em}
+.foot-h{font-size:.62rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem}
+.foot-col ul{display:flex;flex-direction:column;gap:.55rem}
+.foot-col a{font-size:.82rem;color:var(--silver);transition:color .2s}
+.foot-col a:hover{color:var(--white)}
+.foot-contact-list{display:flex;flex-direction:column;gap:.65rem}
+.fci{display:flex;align-items:center;gap:.55rem}
+.fci svg{width:13px;height:13px;stroke:var(--gold);flex-shrink:0}
+.fci a,.fci span{font-size:.82rem;color:var(--silver);transition:color .2s}
+.fci a:hover{color:var(--white)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-block:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.foot-bottom p{font-size:.72rem;color:#444;letter-spacing:.04em}
+
+/* ── FABS ───────────────────────────────────────────── */
+.fab{position:fixed;right:1.25rem;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:700;transition:transform .22s,box-shadow .22s;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.fab:hover{transform:scale(1.1)}
+.fab svg{width:20px;height:20px}
+.fab-wa{bottom:5.5rem;background:#25D366;color:#fff}
+.fab-wa:hover{box-shadow:0 6px 24px rgba(37,211,102,.4)}
+.fab-ph{bottom:9.75rem;background:var(--gold);color:var(--ink)}
+.fab-ph:hover{box-shadow:0 6px 24px rgba(201,153,26,.4)}
+#btt{position:fixed;right:1.25rem;bottom:1.25rem;width:42px;height:42px;background:var(--ink2);border:1px solid var(--gold-line);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:700;opacity:0;pointer-events:none;transition:opacity .25s,transform .22s,background .2s;cursor:pointer}
+#btt.show{opacity:1;pointer-events:auto}
+#btt:hover{background:var(--gold);transform:translateY(-3px)}
+#btt:hover svg{stroke:var(--ink)}
+#btt svg{width:16px;height:16px;stroke:var(--silver)}
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media(max-width:1024px){
+  .nav-links{display:none}
+  .hbg{display:flex}
+  .proc-g{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .proc-g::before{display:none}
+  .foot-g{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .about-g{grid-template-columns:1fr}
+  .about-chip{left:0;bottom:-1rem}
+  .why-g{grid-template-columns:1fr 1fr}
+  .cta-inner{grid-template-columns:1fr}
+  .cta-acts{align-items:flex-start}
+  .contact-g{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .why-g{grid-template-columns:1fr}
+  .proc-g{grid-template-columns:1fr}
+  .hero-acts .btn{width:100%;max-width:280px;justify-content:center}
+  .hero-acts{flex-direction:column;align-items:center}
+  .svc-tabs{flex-wrap:wrap;width:100%}
+  .foot-g{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="pre" aria-hidden="true">
+  <div class="pre-bolt">
+    <svg viewBox="0 0 36 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 2L3 30H15L13 50L33 22H21L21 2Z" stroke="#C9991A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+  <div class="pre-name">Lasini Electrical</div>
+</div>
+
+<!-- NAV -->
+<header id="nav" role="banner">
+  <div class="nav-i">
+    <a href="#hero" class="nav-logo" aria-label="Lasini Electrical — home">
+      <img src="images/logo.png" alt="Lasini Electrical" class="nav-logo-img"/>
+      <span class="nav-name">LASINI <span>ELECTRICAL</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#why">Why Us</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+      <a href="tel:+27824962161" class="nav-cta">082 496 2161</a>
+    </nav>
+    <button class="hbg" id="hbg" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mob" id="mob" role="dialog" aria-modal="true" aria-label="Navigation">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="tel:+27824962161" class="mob-cta">082 496 2161</a></li>
+  </ul>
+</div>
+
+<main>
+
+<!-- HERO -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-body">
+    <img src="images/logo.png" alt="Lasini Electrical (Pty) Ltd" class="hero-logo-img"/>
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Licensed &amp; Compliant · South Africa</span>
+    </div>
+    <h1 class="hero-h1">
+      Powering Your World<em>Safely &amp; Reliably.</em>
+    </h1>
+    <p class="hero-sub">
+      Professional electrical contractor serving residential, commercial &amp; industrial clients<br/>
+      throughout South Africa — specialists in the Eastern Cape.
+    </p>
+    <div class="hero-acts">
+      <a href="tel:+27824962161" class="btn btn-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.4 2.83 2 2 0 012.38.84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call Now
+      </a>
+      <a href="https://wa.me/27824962161?text=Hi%20Lasini%20Electrical%20%F0%9F%91%8B%0A%0AI%20found%20your%20website%20and%20would%20like%20to%20request%20a%20quote.%0A%0A*My%20Details%3A*%0AName%3A%20%0APhone%3A%20%0AArea%3A%20%0A%0A*Service%20I%20need%3A*%0A%0A*Brief%20description%3A*%0A%0APlease%20let%20me%20know%20your%20availability.%20Thank%20you%21" target="_blank" rel="noopener" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        WhatsApp
+      </a>
+      <a href="#contact" class="btn btn-ghost">Get a Quote</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-label="Scroll down">
+    <span>Scroll</span>
+    <div class="scroll-track"><div class="scroll-thumb"></div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>COC Certificates</span><span>MV Installations</span><span>LV Installations</span>
+    <span>Fault Finding</span><span>DB Upgrades</span><span>House Wiring</span>
+    <span>Commercial Electrical</span><span>Industrial Wiring</span><span>LED Upgrades</span>
+    <span>Maintenance Contracts</span><span>24/7 Emergency</span><span>Eastern Cape</span>
+    <!-- duplicate for seamless loop -->
+    <span>COC Certificates</span><span>MV Installations</span><span>LV Installations</span>
+    <span>Fault Finding</span><span>DB Upgrades</span><span>House Wiring</span>
+    <span>Commercial Electrical</span><span>Industrial Wiring</span><span>LED Upgrades</span>
+    <span>Maintenance Contracts</span><span>24/7 Emergency</span><span>Eastern Cape</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sec" aria-label="About Lasini Electrical">
+  <div class="wrap">
+    <div class="about-g">
+      <div class="about-visual" data-r="left">
+        <div class="about-img">
+          <!-- Replace with: <img src="images/about.jpg" alt="Lasini Electrical team on site" loading="lazy"/> -->
+          <div class="about-img-label">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="14" rx="2" stroke-width="1"/><path d="M8 21h8M12 17v4" stroke-width="1" stroke-linecap="round"/><path d="M7 7h2v6H7zM11 10h2v3h-2zM15 8h2v5h-2z" stroke-width="1" stroke-linecap="round"/></svg>
+            Insert site photograph here
+          </div>
+        </div>
+        <div class="about-chip">
+          <div class="about-chip-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="about-chip-text">
+            <strong>SANS Compliant</strong>
+            <span>Every installation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text" data-r="right">
+        <p class="eyebrow">Who We Are</p>
+        <h2 class="h2" style="margin-bottom:1.25rem">Electrical expertise<br/><em>you can trust.</em></h2>
+        <div class="divider-line"></div>
+        <p>Lasini Electrical (Pty) Ltd is a licensed electrical contractor delivering professional services to residential, commercial, and industrial clients across South Africa — with deep roots and extensive experience in the Eastern Cape, including East London and surrounds.</p>
+        <p>Every job we take on is completed to SANS 10142 standards. We don't cut corners, we don't outsource quality, and we don't leave a site until the work is right. Our clients come back — and they refer their neighbours.</p>
+        <div class="about-pills">
+          <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safety First</div>
+          <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Quality Workmanship</div>
+          <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>On Time, Every Time</div>
+          <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Client Relationships</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="sec" aria-label="Our Services">
+  <div class="wrap">
+    <div data-r>
+      <p class="eyebrow" style="color:var(--gold)">What We Do</p>
+      <h2 class="h2" style="color:var(--white);margin-bottom:.75rem">The full spectrum of<br/><em>electrical contracting.</em></h2>
+      <p class="lead">From a single COC to a full industrial MV installation — we handle it.</p>
+    </div>
+
+    <div class="svc-tabs" role="tablist" aria-label="Service categories">
+      <button class="svc-tab act" role="tab" aria-selected="true" data-tab="compliance">Compliance</button>
+      <button class="svc-tab" role="tab" aria-selected="false" data-tab="residential">Residential</button>
+      <button class="svc-tab" role="tab" aria-selected="false" data-tab="commercial">Commercial</button>
+      <button class="svc-tab" role="tab" aria-selected="false" data-tab="industrial">Industrial</button>
+      <button class="svc-tab" role="tab" aria-selected="false" data-tab="maintenance">Maintenance</button>
+    </div>
+
+    <!-- Compliance -->
+    <div class="svc-panel act svc-grid" id="tab-compliance" role="tabpanel">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <h3>Certificate of Compliance (COC)</h3>
+        <p>Residential and commercial COC issuance — legally required for property transfers and insurance. Fast, thorough, accurate.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h3>Electrical Safety Inspections</h3>
+        <p>Comprehensive installation inspections identifying non-compliance, hazards and risks before they become costly problems.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Pre-Sale Property Inspections</h3>
+        <p>Preparing your property for sale? We identify and resolve electrical issues before your estate agent does.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Fault Compliance Corrections</h3>
+        <p>Failed an inspection? We identify and fix every non-conformity, then re-certify — one team, start to finish.</p>
+      </div>
+    </div>
+
+    <!-- Residential -->
+    <div class="svc-panel svc-grid" id="tab-residential" role="tabpanel">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>House Wiring &amp; Rewiring</h3>
+        <p>New builds or full rewires — neat, code-compliant wiring that lasts and passes COC first time.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>DB Board Upgrades</h3>
+        <p>Old or overloaded distribution boards replaced with safe, modern units — including surge protection and RCBO fitting.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+        <h3>Lighting Installation</h3>
+        <p>Indoor and outdoor lighting — downlights, pendants, security lights, garden lighting and LED conversions.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>Geyser, Stove &amp; Appliances</h3>
+        <p>Safe, code-compliant connections for geysers, stoves and high-draw appliances — with correct earth bonding.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        <h3>Fault Finding &amp; Power Failures</h3>
+        <p>Systematic diagnostics to locate the exact fault — fast. No guesswork, no unnecessary part replacements.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg></div>
+        <h3>Plugs, Switches &amp; Sockets</h3>
+        <p>Replacements, additions and relocations — including USB outlets and 3-phase sockets where required.</p>
+      </div>
+    </div>
+
+    <!-- Commercial -->
+    <div class="svc-panel svc-grid" id="tab-commercial" role="tabpanel">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div>
+        <h3>Office &amp; Retail Installations</h3>
+        <p>Complete electrical fit-outs for offices, shops and mixed-use spaces — lighting, power and data containment.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Shop Fitting Electrical</h3>
+        <p>Electrical works coordinated with shop fitters — track lighting, feature lighting, POS power and signage circuits.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg></div>
+        <h3>LED Lighting Upgrades</h3>
+        <p>Convert fluorescent and halogen systems to energy-efficient LED — reduce your electricity bill immediately.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+        <h3>Power Distribution Setup</h3>
+        <p>Subboards, busbar chambers and distribution for multi-tenant buildings and high-demand commercial premises.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>Emergency Repair Services</h3>
+        <p>Electrical faults that shut down business get priority response. We diagnose and restore power fast.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 7h2v6H7zM15 8h2v5h-2z"/></svg></div>
+        <h3>Maintenance Contracts</h3>
+        <p>Ongoing electrical maintenance agreements — scheduled inspections, testing and reactive repair on call.</p>
+      </div>
+    </div>
+
+    <!-- Industrial -->
+    <div class="svc-panel svc-grid" id="tab-industrial" role="tabpanel">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M7 7h2v6H7zM11 10h2v3h-2zM15 8h2v5h-2z"/></svg></div>
+        <h3>MV Electrical Installations</h3>
+        <p>Medium-voltage switchgear, transformers, ring main units and HV cabling installed to SANS standards by qualified personnel.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>LV Electrical Installations</h3>
+        <p>Low-voltage distribution, busbar systems, cable containment and all associated LV works for new and existing plant.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Industrial Wiring Systems</h3>
+        <p>Armoured cabling, cable tray systems, conduit and trunking for manufacturing plants and industrial buildings.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M6.34 17.66l-1.41 1.41M20 12h2M2 12h2M17.66 17.66l1.41 1.41M4.93 4.93l1.41 1.41"/></svg></div>
+        <h3>Machinery &amp; Equipment Wiring</h3>
+        <p>Control panels, motor starters, VSD wiring and PLC connections for production equipment of any complexity.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+        <h3>Power Distribution Systems</h3>
+        <p>High-current busbars, transformer LV boards and distribution systems for high-demand industrial operations.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></div>
+        <h3>Industrial Fault Diagnostics</h3>
+        <p>Thermal imaging, insulation testing and systematic fault-finding on industrial electrical systems — minimum downtime.</p>
+      </div>
+    </div>
+
+    <!-- Maintenance -->
+    <div class="svc-panel svc-grid" id="tab-maintenance" role="tabpanel">
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Preventative Maintenance</h3>
+        <p>Scheduled checks, thermography scans, torque checks and safety audits — keeping faults from becoming failures.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>24/7 Emergency Repairs</h3>
+        <p>Electrical faults don't keep office hours. Neither do we. Call us anytime — we'll be there with the right equipment.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+        <h3>System Upgrades</h3>
+        <p>Ageing infrastructure upgraded to current standards — DB boards, cabling, earthing and surge protection.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <h3>Overload &amp; Tripping Resolution</h3>
+        <p>Persistent tripping analysed and resolved properly — not just reset. Load calculations, circuit balancing and protection sizing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why" class="sec" aria-label="Why Choose Lasini Electrical">
+  <div class="wrap">
+    <div data-r>
+      <p class="eyebrow">The Difference</p>
+      <h2 class="h2" style="margin-bottom:.75rem">Why clients choose us<br/><em>and keep coming back.</em></h2>
+      <p class="lead">Plenty of electricians can wire a plug. Not all of them show up on time, do it right, and back their work.</p>
+    </div>
+    <div class="why-g">
+      <div class="why-card" data-r>
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Safety, Not Just Compliance</h3>
+        <p>We install for long-term safety, not just to pass an inspection. Every job is done as if it's our own home or facility.</p>
+      </div>
+      <div class="why-card" data-r>
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <h3>Quality Workmanship</h3>
+        <p>Neat, robust, properly supported installations. Our work is visible — and we're proud of how it looks.</p>
+      </div>
+      <div class="why-card" data-r>
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Prompt Response</h3>
+        <p>We pick up the phone, we quote quickly and we arrive when we say we will. No chasing, no ghosting.</p>
+      </div>
+      <div class="why-card" data-r>
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <h3>Reliable &amp; Consistent</h3>
+        <p>We deliver what we quote — on budget, to standard, on time. Our reputation is built on consistency.</p>
+      </div>
+      <div class="why-card" data-r>
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Real Client Relationships</h3>
+        <p>We don't disappear after the job. We follow up, we're available for questions, and we're there when you need us again.</p>
+      </div>
+      <div class="why-card" data-r>
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div>
+        <h3>Industry Best Practices</h3>
+        <p>Up-to-date with SANS 10142 and evolving standards. The right techniques, the right tools, the right people.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="sec" aria-label="How We Work">
+  <div class="wrap">
+    <div data-r style="text-align:center;margin-bottom:0">
+      <p class="eyebrow" style="justify-content:center">How It Works</p>
+      <h2 class="h2" style="margin-bottom:.75rem">Simple, professional,<br/><em>start to finish.</em></h2>
+      <p class="lead" style="margin-inline:auto;text-align:center">Getting your electrical work done with us is straightforward. Here's what to expect.</p>
+    </div>
+    <div class="proc-g">
+      <div class="proc-step" data-r>
+        <div class="proc-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <h4>Call or WhatsApp</h4>
+        <p>Reach us on 082 496 2161 or send a WhatsApp. Tell us what you need — we respond fast.</p>
+      </div>
+      <div class="proc-step" data-r>
+        <div class="proc-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        </div>
+        <h4>Site Visit &amp; Quote</h4>
+        <p>We assess your site and provide a clear, no-obligation written quote. No hidden costs.</p>
+      </div>
+      <div class="proc-step" data-r>
+        <div class="proc-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h4>Work Completed</h4>
+        <p>Qualified electricians complete the work to SANS standards, on schedule, with minimal disruption.</p>
+      </div>
+      <div class="proc-step" data-r>
+        <div class="proc-dot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Certified &amp; Signed Off</h4>
+        <p>Where required, your COC is issued. You receive documentation and a site that's safe and compliant.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" aria-label="Request a Quote">
+  <div class="wrap">
+    <div class="cta-inner" data-r>
+      <div>
+        <h2 class="cta-h">Need an electrician?<br/><em>Let's get it done.</em></h2>
+        <p class="cta-sub">Call us, send a WhatsApp or fill in the form below. We'll get back to you fast with a clear quote — no obligation.</p>
+      </div>
+      <div class="cta-acts">
+        <a href="tel:+27824962161" class="btn btn-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Call 082 496 2161
+        </a>
+        <a href="https://wa.me/27824962161?text=Hi%20Lasini%20Electrical%20%F0%9F%91%8B%0A%0AI%20found%20your%20website%20and%20would%20like%20to%20request%20a%20quote.%0A%0A*My%20Details%3A*%0AName%3A%20%0APhone%3A%20%0AArea%3A%20%0A%0A*Service%20I%20need%3A*%0A%0A*Brief%20description%3A*%0A%0APlease%20let%20me%20know%20your%20availability.%20Thank%20you%21" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+          WhatsApp Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec" aria-label="Contact">
+  <div class="wrap">
+    <div data-r>
+      <p class="eyebrow">Get In Touch</p>
+      <h2 class="h2" style="margin-bottom:.5rem">Contact <em>Lasini Electrical</em></h2>
+      <p class="lead" style="margin-bottom:0">We're based in the Eastern Cape and serve clients across South Africa. Reach us any way you prefer.</p>
+    </div>
+    <div class="contact-g">
+      <div data-r="left">
+        <div class="cinfo-block">
+          <div class="cinfo-item">
+            <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+            <div><span class="ci-label">Phone</span><a href="tel:+27824962161" class="ci-val">082 496 2161</a></div>
+          </div>
+          <div class="cinfo-item">
+            <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><span class="ci-label">Email</span><a href="mailto:lasinielectrical@gmail.com" class="ci-val">lasinielectrical@gmail.com</a></div>
+          </div>
+          <div class="cinfo-item">
+            <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+            <div><span class="ci-label">WhatsApp</span><a href="https://wa.me/27824962161?text=Hi%20Lasini%20Electrical%20%F0%9F%91%8B%0A%0AI%20found%20your%20website%20and%20would%20like%20to%20request%20a%20quote.%0A%0A*My%20Details%3A*%0AName%3A%20%0APhone%3A%20%0AArea%3A%20%0A%0A*Service%20I%20need%3A*%0A%0A*Brief%20description%3A*%0A%0APlease%20let%20me%20know%20your%20availability.%20Thank%20you%21" target="_blank" rel="noopener" class="ci-val">082 496 2161</a></div>
+          </div>
+          <div class="cinfo-item">
+            <div class="ci-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><span class="ci-label">Hours</span><span class="ci-val">Monday – Friday, Working Hours</span></div>
+          </div>
+        </div>
+        <div class="hours-note" style="margin-top:1rem">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Serving East London, the Eastern Cape,<br/>and clients across South Africa.</span>
+        </div>
+      </div>
+
+      <div class="form-wrap" data-r="right">
+        <form id="qform" novalidate aria-label="Quote request">
+          <div class="form-row">
+            <div class="fg">
+              <label for="fn">Name <span>*</span></label>
+              <input type="text" id="fn" name="name" required autocomplete="name" placeholder="Your full name"/>
+            </div>
+            <div class="fg">
+              <label for="fp">Phone <span>*</span></label>
+              <input type="tel" id="fp" name="phone" required autocomplete="tel" placeholder="082 000 0000"/>
+            </div>
+          </div>
+          <div class="fg">
+            <label for="fe">Email <span>*</span></label>
+            <input type="email" id="fe" name="email" required autocomplete="email" placeholder="you@example.com"/>
+          </div>
+          <div class="fg">
+            <label for="fs">Service Needed</label>
+            <select id="fs" name="service">
+              <option value="" disabled selected>Select a service…</option>
+              <option>Certificate of Compliance (COC)</option>
+              <option>MV Electrical Installation</option>
+              <option>LV Electrical Installation</option>
+              <option>House Wiring / Rewiring</option>
+              <option>DB Board Upgrade</option>
+              <option>Fault Finding</option>
+              <option>Commercial Electrical</option>
+              <option>Industrial Electrical</option>
+              <option>Maintenance Contract</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label for="fm">Project Details</label>
+            <textarea id="fm" name="message" placeholder="Briefly describe what you need…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:1rem">
+            Send Request
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+          <div class="success-msg" id="smsg" role="alert" aria-live="polite">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Your email app is opening — just hit Send to deliver your request!
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-g">
+      <div class="foot-brand">
+        <img src="images/logo.png" alt="Lasini Electrical (Pty) Ltd" class="foot-logo-img"/>
+        <p class="foot-note" style="margin-top:.75rem">Licensed Electrical Contractor · South Africa</p>
+      </div>
+      <div class="foot-col">
+        <h4 class="foot-h">Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Our Services</a></li>
+          <li><a href="#why">Why Choose Us</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4 class="foot-h">Services</h4>
+        <ul>
+          <li><a href="#services">COC Certificates</a></li>
+          <li><a href="#services">MV &amp; LV Installations</a></li>
+          <li><a href="#services">Residential Wiring</a></li>
+          <li><a href="#services">Commercial Electrical</a></li>
+          <li><a href="#services">Industrial Wiring</a></li>
+          <li><a href="#services">Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4 class="foot-h">Contact</h4>
+        <div class="foot-contact-list">
+          <div class="fci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:+27824962161">082 496 2161</a></div>
+          <div class="fci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:lasinielectrical@gmail.com">lasinielectrical@gmail.com</a></div>
+          <div class="fci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Mon – Fri · Working Hours</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>&copy; <span id="yr"></span> Lasini Electrical (Pty) Ltd. All rights reserved.</p>
+      <p>Eastern Cape · South Africa</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FABS -->
+<a href="https://wa.me/27824962161?text=Hi%20Lasini%20Electrical%20%F0%9F%91%8B%0A%0AI%20found%20your%20website%20and%20would%20like%20to%20request%20a%20quote.%0A%0A*My%20Details%3A*%0AName%3A%20%0APhone%3A%20%0AArea%3A%20%0A%0A*Service%20I%20need%3A*%0A%0A*Brief%20description%3A*%0A%0APlease%20let%20me%20know%20your%20availability.%20Thank%20you%21" target="_blank" rel="noopener" class="fab fab-wa" aria-label="WhatsApp us">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<a href="tel:+27824962161" class="fab fab-ph" aria-label="Call us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+</a>
+<button id="btt" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+'use strict';
+
+// PRELOADER
+(()=>{
+  const p=document.getElementById('pre');
+  const hide=()=>p.classList.add('gone');
+  document.body.style.overflow='hidden';
+  if(document.readyState==='complete') setTimeout(()=>{hide();document.body.style.overflow=''},500);
+  else window.addEventListener('load',()=>setTimeout(()=>{hide();document.body.style.overflow=''},500));
+  setTimeout(()=>{hide();document.body.style.overflow=''},3000);
+})();
+
+// NAV SCROLL
+(()=>{
+  const nav=document.getElementById('nav');
+  const onS=()=>nav.classList.toggle('solid',window.scrollY>40);
+  window.addEventListener('scroll',onS,{passive:true});
+  onS();
+})();
+
+// ACTIVE NAV
+(()=>{
+  const links=document.querySelectorAll('.nav-links a[href^="#"]');
+  const secs=[...document.querySelectorAll('section[id]')];
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const id=e.target.id;
+        links.forEach(l=>l.classList.toggle('act',l.getAttribute('href')==='#'+id));
+      }
+    });
+  },{rootMargin:'-40% 0px -50% 0px'});
+  secs.forEach(s=>io.observe(s));
+})();
+
+// HAMBURGER
+(()=>{
+  const btn=document.getElementById('hbg');
+  const mob=document.getElementById('mob');
+  const open=()=>{btn.classList.add('on');mob.classList.add('on');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'};
+  const close=()=>{btn.classList.remove('on');mob.classList.remove('on');btn.setAttribute('aria-expanded','false');document.body.style.overflow=''};
+  btn.addEventListener('click',()=>btn.classList.contains('on')?close():open());
+  mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+})();
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href').slice(1);
+    const t=document.getElementById(id);
+    if(!t)return;
+    e.preventDefault();
+    const nh=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nh'))||68;
+    window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-nh,behavior:'smooth'});
+  });
+});
+
+// REVEAL
+(()=>{
+  const items=document.querySelectorAll('[data-r]');
+  if(!('IntersectionObserver' in window)){items.forEach(i=>i.classList.add('on'));return}
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const siblings=[...e.target.parentElement.querySelectorAll('[data-r]')];
+        const idx=siblings.indexOf(e.target);
+        setTimeout(()=>e.target.classList.add('on'),idx*90);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+  items.forEach(i=>io.observe(i));
+})();
+
+// SERVICE TABS
+(()=>{
+  const tabs=document.querySelectorAll('.svc-tab');
+  const panels=document.querySelectorAll('.svc-panel');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      tabs.forEach(t=>{t.classList.remove('act');t.setAttribute('aria-selected','false')});
+      panels.forEach(p=>p.classList.remove('act'));
+      tab.classList.add('act');
+      tab.setAttribute('aria-selected','true');
+      const target=document.getElementById('tab-'+tab.dataset.tab);
+      if(target)target.classList.add('act');
+    });
+  });
+})();
+
+// BACK TO TOP
+(()=>{
+  const btn=document.getElementById('btt');
+  window.addEventListener('scroll',()=>btn.classList.toggle('show',window.scrollY>400),{passive:true});
+  btn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+})();
+
+// FORM — mailto method (opens user's email app pre-filled)
+(()=>{
+  const form=document.getElementById('qform');
+  const msg=document.getElementById('smsg');
+  if(!form)return;
+
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+
+    // Validate required fields
+    const req=form.querySelectorAll('[required]');
+    let ok=true;
+    req.forEach(f=>{f.style.borderColor='';if(!f.value.trim()){f.style.borderColor='#c0392b';ok=false}});
+    if(!ok)return;
+
+    // Collect values
+    const name    = form.querySelector('#fn').value.trim();
+    const phone   = form.querySelector('#fp').value.trim();
+    const email   = form.querySelector('#fe').value.trim();
+    const service = form.querySelector('#fs').value || 'Not specified';
+    const message = form.querySelector('#fm').value.trim() || 'No details provided.';
+
+    // Build email body
+    const subject = encodeURIComponent('Quote Request — Lasini Electrical Website');
+    const body = encodeURIComponent(
+      'Hello Lasini Electrical,\n\n' +
+      'You have received a new quote request from your website.\n\n' +
+      '────────────────────────\n' +
+      'CONTACT DETAILS\n' +
+      '────────────────────────\n' +
+      'Name:    ' + name + '\n' +
+      'Phone:   ' + phone + '\n' +
+      'Email:   ' + email + '\n\n' +
+      '────────────────────────\n' +
+      'SERVICE REQUESTED\n' +
+      '────────────────────────\n' +
+      service + '\n\n' +
+      '────────────────────────\n' +
+      'PROJECT DETAILS\n' +
+      '────────────────────────\n' +
+      message + '\n\n' +
+      '────────────────────────\n' +
+      'Sent via lasinielectrical.co.za'
+    );
+
+    // Open email client
+    window.location.href = 'mailto:lasinielectrical@gmail.com?subject=' + subject + '&body=' + body;
+
+    // Show confirmation & reset
+    msg.classList.add('show');
+    setTimeout(()=>{
+      form.reset();
+      msg.classList.remove('show');
+    }, 6000);
+  });
+
+  form.querySelectorAll('[required]').forEach(f=>f.addEventListener('input',()=>f.style.borderColor=''));
+})();
+
+// YEAR
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+// REDUCED MOTION
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)
+  document.querySelectorAll('[data-r]').forEach(e=>e.classList.add('on'));
+</script>
+</body>
+</html>
